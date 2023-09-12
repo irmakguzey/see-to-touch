@@ -5,7 +5,7 @@ image_model_type: temporal
 vinn_image_out_dir: null 
 vinn_image_model_type: byol
 
-data_path: /home/irmak/Workspace/Holo-Bot/extracted_data/plier_picking
+data_path: /see_to_touch/tasks/plier_picking
 
 name: plier_picking
 task_name: PlierPicking-v1

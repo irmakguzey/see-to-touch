@@ -1,11 +1,10 @@
-# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.14/17-53_temporal_ssl_bs_32_epochs_1000_view_0_mint_opening_frame_diff_5_resnet
 image_out_dir: null # Input the model weight here
 image_model_type: temporal
 
 vinn_image_out_dir: null
 vinn_image_model_type: byol
 
-data_path: /home/irmak/Workspace/Holo-Bot/extracted_data/mint_opening
+data_path: /see_to_touch/tasks/mint_opening
 
 name: mint_opening
 task_name: MintOpening-v1

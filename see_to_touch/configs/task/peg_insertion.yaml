@@ -5,7 +5,7 @@ image_model_type: temporal
 vinn_image_out_dir: null
 vinn_image_model_type: byol
 
-data_path: /home/irmak/Workspace/Holo-Bot/extracted_data/peg_insertion
+data_path: /see_to_touch/tasks/peg_insertion
 
 name: peg_insertion
 task_name: PegInsertion-v1

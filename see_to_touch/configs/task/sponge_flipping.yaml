@@ -5,7 +5,7 @@ image_model_type: temporal
 vinn_image_out_dir: 2023.06.07-17-45_image_byol_card_flipping_view_0_resnet
 vinn_image_model_type: byol
 
-data_path: /home/irmak/Workspace/Holo-Bot/extracted_data/card_flipping
+data_path: /see_to_touch/tasks/sponge_flipping
 
 name: sponge_flipping
 task_name: CardFlipping-v1
