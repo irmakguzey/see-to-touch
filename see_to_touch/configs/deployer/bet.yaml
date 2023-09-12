@@ -1,0 +1,45 @@
+_target_: tactile_learning.deployers.BET
+data_path: ??? 
+deployment_dump_dir: ???
+tactile_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.01.28/12-32_tactile_byol_bs_512_tactile_play_data_alexnet_pretrained_duration_120
+# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.04.05/00-59_image_byol_bs_32_cup_picking_after_rss
+# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.05.06/10-50_image_byol_bs_32_epochs_500_lr_1e-05_bowl_picking_after_rss
+# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.05.10/00-13_image_byol_bs_32_epochs_500_lr_1e-05_gamepad_after_rss 
+# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.05.09/17-10_image_byol_bs_32_epochs_500_lr_1e-05_bottle_opening_after_rss 
+# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.05.10/16-16_image_byol_bs_33_epochs_500_lr_1e-05_book_opening_after_rss 
+
+# bet_model_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.04.05/15-47_bet_bs_32_cup_picking_after_rss
+# bet_model_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.05.06/13-55_bet_bs_32_bowl_picking_after_rss 
+# bet_model_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.05.10/13-29_bet_bs_32_gamepad_after_rss
+# bet_model_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.05.10/13-41_bet_bs_32_bottle_opening_after_rss 
+# bet_model_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.05.10/17-34_bet_bs_32_book_opening_after_rss 
+
+# CORL Baselines
+# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.05/19-59_temporal_ssl_bs_32_epochs_1000_lr_1e-05_card_turning_frame_diff_5_resnet 
+# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.04/21-28_temporal_ssl_bs_32_epochs_1000_lr_1e-05_card_flipping_frame_diff_5_resnet 
+# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.02/21-37_temporal_ssl_bs_32_epochs_1000_lr_1e-05_plier_picking_frame_diff_8
+# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.06/22-59_temporal_ssl_bs_32_epochs_1000_view_0_peg_insertion_frame_diff_5_resnet 
+# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.06/18-27_temporal_ssl_bs_32_epochs_1000_view_1_bowl_picking_frame_diff_5_resnet
+image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.14/17-53_temporal_ssl_bs_32_epochs_1000_view_0_mint_opening_frame_diff_5_resnet
+
+# bet_model_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.08/16-35_bet_bowl_picking_view_1_bet
+# bet_model_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.08/16-37_bet_plier_picking_view_0_bet
+# bet_model_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.08/16-36_bet_peg_insertion_view_0_bet
+# bet_model_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.08/16-34_bet_card_turning_view_0_bet
+# bet_model_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.08/16-35_bet_card_flipping_view_0_bet
+bet_model_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.08.02/12-06_bet_mint_opening_view_0
+
+seq_length: 3
+representation_types: ['image', 'tactile', 'kinova', 'allegro'] # Observations used in the representations
+# demos_to_use: [22,24,26,34,28,29] # Bowl Unstacking
+# demos_to_use: [2,3,5,6,7,9] # Gamepad
+# demos_to_use: [2,5,8,10,11,12] # Bottle Opening
+# demos_to_use: [3,4,5,6,8,10] 
+
+# demos_to_use: [25] # Sponge flipping
+# demos_to_use: [16] # Card Turning
+# demos_to_use: [15] # Plier picking
+# demos_to_use: [4] # Peg Insertion
+# demos_to_use: [22] # Bowl unstacking
+demos_to_use: []
+view_num: 0

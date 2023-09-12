@@ -1,0 +1,42 @@
+# @package agent
+_target_: tactile_learning.agents.TAVI
+# Base policy parameters
+data_path: ${data_path} # Path to hold all the preprocessed demos
+expert_demo_nums: ${expert_demo_nums} # Demo to get the base action from
+expert_id: ${expert_id}
+
+# Encoders
+image_out_dir: ${image_out_dir}
+image_model_type: ${image_model_type}
+tactile_out_dir: ${tactile_out_dir}
+tactile_model_type: ${tactile_model_type}
+
+# Training parameters
+policy_representations: ${policy_representations}
+features_repeat: ${features_repeat}
+experiment_name: ${experiment}
+view_num: ${camera_num}
+device: ${device}
+num_expl_steps: ${num_seed_frames}
+
+# RL Learner parameters - will be moved to the rl learners
+# lr: 1e-4 # It was 1e-4 before 
+# feature_dim: 512
+# hidden_dim: 64
+
+data_representations: ${data_representations}
+
+update_critic_frequency: 2
+update_critic_target_frequency: 4
+update_actor_frequency: 4
+separate_aug: ${rl_learner.separate_aug}
+
+# DDPG parameters
+stddev_schedule: 0.1
+stddev_clip: 0.3
+gradient_clip: 1.
+
+# Task based - offset parameters
+arm_offset_scale_factor: ${task.arm_offset_scale_factor}
+hand_offset_scale_factor: ${task.hand_offset_scale_factor}
+offset_mask: ${task.offset_mask}

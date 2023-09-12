@@ -1,0 +1,6 @@
+_target_: tactile_learning.agents.base_policy.vinn_openloop.VINNOpenloop
+expert_demos: ???
+image_out_dir: ${task.vinn_image_out_dir}
+image_model_type: ${task.vinn_image_model_type}
+device: ${device}
+name: vinn_openloop

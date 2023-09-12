@@ -1,0 +1,10 @@
+encoder:
+  _target_: tactile_learning.models.pretrained.resnet18
+  pretrained: true
+  out_dim: 512
+
+linear_layer:
+  _target_: tactile_learning.models.create_fc 
+  input_dim: 1024 # 64 + 512 1536 # 1024 + 512
+  output_dim: 23 # 16 + 7
+  hidden_dims: [256, 64] # [512, 128, 64]

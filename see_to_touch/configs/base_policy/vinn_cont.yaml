@@ -1,0 +1,10 @@
+_target_: tactile_learning.agents.base_policy.vinn_cont.VINNContinuous
+expert_demos: ???
+tactile_repr_size: ???
+image_out_dir: ${task.vinn_image_out_dir}
+image_model_type: ${task.vinn_image_model_type}
+device: 1 # ${device}
+max_steps: ${max_steps} # Max episode steps
+name: vinn_cont
+continuous_steps: ${vinn_cont_steps}
+beginning_demo_cont: ${vinn_no_change_in_demo}

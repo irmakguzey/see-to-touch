@@ -1,0 +1,25 @@
+_target_: tactile_learning.deployers.VINN
+data_path: ???
+
+# Directories to change by the user depending on where they saved the data
+deployment_dump_dir: ???
+# tactile_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.01.28/12-32_tactile_byol_bs_512_tactile_play_data_alexnet_pretrained_duration_120
+# tactile_model_type: byol
+# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.14/17-53_temporal_ssl_bs_32_epochs_1000_view_0_mint_opening_frame_diff_5_resnet
+# image_model_type: temporal
+tactile_out_dir: null 
+tactile_model_type: null
+image_out_dir: null
+image_model_type: pretrained 
+
+nn_buffer_size: 15
+nn_k: 15
+data_representations: ${data_representations}
+representation_types: ['image'] # Observations used in the representations
+representation_importance: [1] # We will multiply the distances with these given numbers when using in scaled nearest neighbors
+demos_to_use: [21]
+
+view_num: 1
+open_loop: false
+
+dump_deployment_info: false

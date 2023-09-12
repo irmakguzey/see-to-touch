@@ -1,0 +1,21 @@
+# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.05/19-59_temporal_ssl_bs_32_epochs_1000_lr_1e-05_card_turning_frame_diff_5_resnet
+image_out_dir: null # Input model weight here
+image_model_type: temporal
+
+vinn_image_out_dir: null
+vinn_image_model_type: byol
+
+data_path: /home/irmak/Workspace/Holo-Bot/extracted_data/card_turning
+
+name: eraser_turning
+task_name: CardTurning-v1
+camera_num: 0
+
+expert_demo_nums: [16]
+arm_offset_scale_factor: 0.05
+hand_offset_scale_factor: 0.25
+
+offset_mask: [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+
+action_type: robot

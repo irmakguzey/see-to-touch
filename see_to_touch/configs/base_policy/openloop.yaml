@@ -1,0 +1,4 @@
+_target_: tactile_learning.agents.base_policy.openloop.Openloop
+expert_demos: ???
+expert_id: ${expert_id}
+name: openloop

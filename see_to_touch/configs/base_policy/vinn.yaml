@@ -1,0 +1,8 @@
+_target_: tactile_learning.agents.base_policy.vinn.VINN
+expert_demos: ???
+tactile_repr_size: ???
+image_out_dir: ${task.vinn_image_out_dir}
+image_model_type: ${task.vinn_image_model_type}
+device: ${device}
+max_steps: ${max_steps} # Max episode steps
+name: vinn

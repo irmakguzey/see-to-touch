@@ -1,0 +1,21 @@
+model:
+  _target_: behavior_transformer.BehaviorTransformer
+  obs_dim: 1555 # Tactile + Vision + Kinova + Allegro (1024 + 512)
+  act_dim: 23 # 7 + 16 -> we joint position as the action and kinova end effector position
+  goal_dim: 0
+  n_clusters: 64
+  kmeans_fit_steps: 50
+  gpt_model:
+    _target_: behavior_transformer.GPT
+    config:
+      _target_: behavior_transformer.GPTConfig
+      block_size: 30
+      input_dim: 1555 # 1024 + 512 + 7 + 12 -> 1555
+      n_layer: 6
+      n_head: 6
+      n_embd: 120
+
+optim:
+  lr: 5.5e-5
+  weight_decay: 2e-1
+  betas: [0.9, 0.999]

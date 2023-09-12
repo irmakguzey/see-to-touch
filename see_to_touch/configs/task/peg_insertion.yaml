@@ -1,0 +1,20 @@
+# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.06/22-59_temporal_ssl_bs_32_epochs_1000_view_0_peg_insertion_frame_diff_5_resnet # peg insertion 
+image_out_dir: null # Input the weight path here
+image_model_type: temporal
+
+vinn_image_out_dir: null
+vinn_image_model_type: byol
+
+data_path: /home/irmak/Workspace/Holo-Bot/extracted_data/peg_insertion
+
+name: peg_insertion
+task_name: PegInsertion-v1
+camera_num: 0
+
+expert_demo_nums: [4]
+arm_offset_scale_factor: 0.05
+hand_offset_scale_factor: 0.07
+
+offset_mask: [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] # peg insertion
+
+action_type: robot

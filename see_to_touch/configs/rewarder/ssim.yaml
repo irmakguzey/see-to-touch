@@ -1,0 +1,9 @@
+_target_: tactile_learning.agents.rewarder.ssim.SSIM
+expert_demos: ???
+image_encoder: null 
+tactile_encoder: null
+device: ${device}
+ssim_base_factor: 0.7 # This gets updated anyways
+representation_types: ${reward_representations}
+expert_frame_matches: ${expert_frame_matches}
+episode_frame_matches: ${episode_frame_matches}

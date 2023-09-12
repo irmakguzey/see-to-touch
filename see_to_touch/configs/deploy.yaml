@@ -1,0 +1,9 @@
+defaults:
+  - deployer: vinn # This fails almost anywhere! 
+
+visualize: false
+loop: true
+frequency: 4
+deployment_dump_dir: null
+data_representations: ['image','franka']
+data_path: /home/irmak/Workspace/Holo-Bot/extracted_data/franka_data_first # User should fill this

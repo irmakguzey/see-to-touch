@@ -1,0 +1,28 @@
+
+preprocessor_module:
+  _target_: tactile_learning.preprocess.Preprocessor
+  data_path: /path/to/data
+  modules:
+    robot: ${robot_cfg}
+    image: ${image_cfg}
+    tactile: ${tactile_cfg}
+  dump_data_indices: true
+  process_single_demo: false
+
+robot_cfg:
+  _target_: tactile_learning.preprocess.RobotPreprocessor
+  subsample_separately: true
+  robot_names: ['franka']
+  robot_thresholds: 
+    hand: 0.008
+    arm: 0.01 # corresponding thresholds to the robot_names
+  dump_fingertips: true
+
+image_cfg:
+  _target_: tactile_learning.preprocess.ImagePreprocessor
+  camera_id: 1
+  is_ssl: false
+  time_difference: null # If the 
+
+tactile_cfg:
+  _target_: tactile_learning.preprocess.TouchPreprocessor

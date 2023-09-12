@@ -1,0 +1,20 @@
+# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.06/18-27_temporal_ssl_bs_32_epochs_1000_view_1_bowl_picking_frame_diff_5_resnet
+image out_dir: null # Input the model tweight here
+image_model_type: temporal 
+
+vinn_image_out_dir: null # Used only when we use VINN as the base policy
+vinn_image_model_type: byol
+
+data_path: /home/irmak/Workspace/Holo-Bot/extracted_data/bowl_picking
+
+name: bowl_unstacking
+task_name: BowlUnstacking-v1
+camera_num: 1
+
+expert_demo_nums: [22] # [24]
+hand_offset_scale_factor: 0.3 
+arm_offset_scale_factor: 0.05 
+offset_mask: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
+
+action_type: robot
+

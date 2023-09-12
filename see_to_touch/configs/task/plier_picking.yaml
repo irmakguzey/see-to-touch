@@ -1,0 +1,18 @@
+# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.02/21-37_temporal_ssl_bs_32_epochs_1000_lr_1e-05_plier_picking_frame_diff_8
+image_out_dir: null # Input the weight path here
+image_model_type: temporal
+
+vinn_image_out_dir: null 
+vinn_image_model_type: byol
+
+data_path: /home/irmak/Workspace/Holo-Bot/extracted_data/plier_picking
+
+name: plier_picking
+task_name: PlierPicking-v1
+camera_num: 0
+
+expert_demo_nums: [15] # 25? 
+arm_offset_scale_factor: 0.03
+hand_offset_scale_factor: 0.25
+offset_mask: [0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+action_type: robot

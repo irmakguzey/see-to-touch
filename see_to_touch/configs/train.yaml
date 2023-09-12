@@ -1,0 +1,41 @@
+defaults:
+    - encoder: temporal_ssl
+    - learner: temporal_ssl
+    - dataset: temporal_joint_diff_dataset
+    - optimizer: adam
+
+seed: 42
+device: cuda
+
+learner_type: temporal_ssl # Can be bet, bc_gmm, image_byol, tactile_stacked_byol # tactile_stacked_byol tactile_linear_byol, bc, tactile_byol
+self_supervised: false
+
+# Hyperparameters to be used everywhere
+batch_size: 32
+tactile_image_size: 64 # 224 # This could be changed for stacked or shared architectures
+vision_image_size: 480
+vision_view_num: 0
+train_epochs: 1000
+save_frequency: 10
+train_dset_split: 0.95
+
+distributed: true
+num_workers: 4
+world_size: 1
+num_gpus: 4
+
+# Data path to be set
+object: plier_clipping_success #mint_opening
+experiment: ${learner_type}_bs_${batch_size}_epochs_${train_epochs}_view_${vision_view_num}_${object}_frame_diff_${dataset.frame_diff}_resnet # Name of the experiment that the models are saved
+data_dir: /home/irmak/Workspace/Holo-Bot/extracted_data/${object}
+# data_dir: /data/tactile_dexterity/play_data
+checkpoint_dir: ??? # Will be set to hydra dir inside the code
+
+# logger
+logger: true # To init logger or not
+log_frequency: 1
+
+# hydra configuration - should be received separately
+hydra:
+    run:
+        dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/${now:%Y.%m.%d}/${now:%H-%M}_${experiment}

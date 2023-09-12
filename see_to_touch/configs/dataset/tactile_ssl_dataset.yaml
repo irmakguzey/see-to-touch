@@ -1,0 +1,5 @@
+_target_: tactile_learning.datasets.TactileSSLDataset
+data_path: ???
+tactile_information_type: whole_hand # whole_hand, stacked, single_sensor
+tactile_img_size: ${tactile_image_size} 
+duration: 120 # All durations: 5, 10, 20, 40, 60, 80, 100, 120

@@ -1,0 +1,11 @@
+_target_: tactile_learning.agents.rewarder.sinkhorn_cosine.SinkhornCosine
+expert_demos: ???
+image_encoder: ??? 
+tactile_encoder: ???
+exponential_weight_init: False
+device: ${device}
+sinkhorn_rew_scale: 1.0 # This gets updated anyways
+auto_rew_scale_factor: 10
+representation_types: ${reward_representations}
+expert_frame_matches: ${expert_frame_matches}
+episode_frame_matches: ${episode_frame_matches}
