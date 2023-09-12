@@ -14,7 +14,7 @@ image_model_type: ${task.image_model_type} # TODO: Add this information to the c
 vinn_cont_steps: 10
 vinn_no_change_in_demo: False # If set to true demo will not change at each time step - it will only change in the beginning
 
-tactile_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.01.28/12-32_tactile_byol_bs_512_tactile_play_data_alexnet_pretrained_duration_120 # - Play data encoder
+tactile_out_dir: /tactile_encoder # - Play data encoder
 tactile_model_type: byol # It could be ssl/byol as well
 
 reward_representations: ['image']
@@ -32,27 +32,7 @@ num_eval_episodes: 20
 evaluate: True
 max_steps: 100
 
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.16T12-59_sponge_flipping_drq_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.17T11-32_peg_insertion_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.17T12-39_eraser_turning_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.17T14-38_plier_picking_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.17T15-26_sponge_flipping_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.17T16-54_mint_opening_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.17T18-05_bowl_unstacking_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.18T13-48_plier_picking_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.18T14-42_sponge_flipping_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.18T16-02_eraser_turning_drqv2_openloop 
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.18T17-11_mint_opening_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.20T15-19_peg_insertion_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.21T13-54_sponge_flipping_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.20T17-19_sponge_flipping_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.21T18-13_plier_picking_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.16T11-04_plier_picking_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.21T13-54_sponge_flipping_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.21T13-54_sponge_flipping_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.16T11-04_plier_picking_drqv2_openloop
-# buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.08.22T14-47_mint_opening_drqv2_openloop
-buffer_path: /home/irmak/Workspace/tactile-learning/buffer/2023.09.01T13-31_plier_clipping_drqv2_openloop
+uffer_path: null 
 
 # FISH and environment params
 expert_id: 0
@@ -78,7 +58,7 @@ save_train_cost_matrices: True
 
 # Snapshot loading
 load_snapshot: True
-snapshot_weight: /home/irmak/Workspace/tactile-learning/weights/snapshot_plier_clipping_drqv2_tavi.pt
+snapshot_weight: weights/...pt
 
 log: False
 experiment: ${now:%Y.%m.%d}T${now:%H-%M}_${task.name}_${rl_learner.name}_${base_policy.name}
