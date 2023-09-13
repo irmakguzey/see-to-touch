@@ -31,5 +31,4 @@ task_make_fn:
   frame_stack: ${suite.frame_stack}
   action_repeat: ${suite.action_repeat}
   action_type: ${task.action_type} # fingertip/joint
-  # seed: ${seed}
-  
+  data_representations: ${data_representations} 

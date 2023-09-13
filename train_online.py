@@ -14,11 +14,11 @@ from pathlib import Path
 from tqdm import tqdm 
 
 from PIL import Image
-
 # Custom imports 
 from see_to_touch.datasets import *
 from see_to_touch.models import *
 from see_to_touch.utils import *
+
 
 class Workspace:
     def __init__(self, cfg):
@@ -54,6 +54,9 @@ class Workspace:
     def _initialize_agent(self):
         action_spec = self.train_env.action_spec()
         action_shape = action_spec.shape
+        print('action_shape: {}'.format(action_shape))
+
+        print('self.cfg.agent: {}'.format(self.cfg.agent))
         self.agent = hydra.utils.instantiate(
             self.cfg.agent,
             action_shape = action_shape)
@@ -70,7 +73,7 @@ class Workspace:
             self.logger = Logger(cfg, wandb_exp_name, out_dir=self.hydra_dir)
 
 
-    def _env_setup(self):
+    def _env_setup(self): # TODO: This should be parametrized
 
         self.train_env = hydra.utils.call( # If not call the actual interaction environment
             self.cfg.suite.task_make_fn
@@ -156,6 +159,7 @@ class Workspace:
         for k, v in payload.items():
             if k not in self.__dict__:
                 agent_payload[k] = v
+        # self.agent.load_snapshot(agent_payload) # NOTE: Make sure that this is okay
         self.agent.load_snapshot_eval(agent_payload)
 
     def _add_time_step(self, time_step, time_steps, observations):
@@ -169,9 +173,20 @@ class Workspace:
             observations['tactile_repr'].append(torch.FloatTensor(time_step.observation['tactile']))
         if 'allegro' in self.data_reprs or 'kinova' in self.data_reprs or 'franka' in self.data_reprs:
             observations['features'].append(torch.FloatTensor(time_step.observation['features']))
- 
+
         return time_steps, observations
     
+    def _init_obs(self):
+        obs = dict()
+        if 'image' in self.data_reprs:
+            obs['image_obs'] = list()
+        if 'tactile' in self.data_reprs:
+            obs['tactile_repr'] = list()
+        if 'allegro' in self.data_reprs or 'kinova' in self.data_reprs or 'franka' in self.data_reprs:
+            obs['features'] = list()
+
+        return obs
+
     def _get_act_obs(self, time_step):
         obs_dict = dict()
         if 'image' in self.data_reprs:
@@ -191,11 +206,8 @@ class Workspace:
             is_episode_done = False
             print(f"Eval Episode {episode}")
             time_steps = list() 
-            observations = dict(
-                image_obs = list(),
-                tactile_repr = list(),
-                features = list()
-            )
+            observations = self._init_obs()
+
             time_step = self.train_env.reset()
             time_steps, observations = self._add_time_step(time_step, time_steps, observations)
             self.eval_video_recorder.init(time_step.observation['pixels'])
@@ -237,20 +249,19 @@ class Workspace:
 
         # Reset step implementations 
         time_steps = list() 
-        observations = dict(
-            image_obs = list(),
-            tactile_repr = list(),
-            features = list()
-        )
+        observations = self._init_obs() 
         time_step = self.train_env.reset()
         
         self.episode_id = 0
         time_steps, observations = self._add_time_step(time_step, time_steps, observations)
 
+        # if self.agent.auto_rew_scale:
+        #     self.agent.sinkhorn_rew_scale = 1. # This will be set after the first episode
+
         self.train_video_recorder.init(time_step.observation['pixels'])
         metrics = dict() 
         is_episode_done = False
-        while train_until_step(self.global_step): # We're going to behave as if we act and the observations and the representations are coming from the mock_demo but all the rest should be the same
+        while train_until_step(self.global_step): 
             
             # At the end of an episode actions
             if time_step.last() or is_episode_done:
@@ -273,9 +284,6 @@ class Workspace:
                 ts = datetime.datetime.now().strftime('%Y%m%dT%H%M%S')
                 self.train_video_recorder.save(f'{ts}_e{self.global_episode}_f{self.global_frame}_r{round(new_rewards_sum,2)}.mp4')
                 
-                if self.mock_env:
-                    self.episode_id = (self.episode_id+1) % len(self.mock_episodes['demo_nums'])
-
                 # Update the reward in the timesteps accordingly
                 obs_length = len(time_steps)
                 for i, elt in enumerate(time_steps):
@@ -295,11 +303,7 @@ class Workspace:
 
                 # Reset the environment at the end of the episode
                 time_steps = list()
-                observations = dict(
-                    image_obs = list(),
-                    tactile_repr = list(),
-                    features = list()
-                ) 
+                observations = self._init_obs()
 
                 x = input("Press Enter to continue... after reseting env")
 
@@ -315,21 +319,14 @@ class Workspace:
 
             # Get the action
             with torch.no_grad(), eval_mode(self.agent):
-                if self.mock_env:
-                    action, base_action = self.agent.mock_act(
-                        time_step.observation,
-                        step = self.global_step,
-                        max_step = self.train_env.spec.max_episode_steps
-                    )
-                else:
-                    action, base_action, is_episode_done, metrics = self.agent.act(
-                        obs = self._get_act_obs(time_step),
-                        global_step = self.global_step, 
-                        episode_step = episode_step,
-                        eval_mode = False
-                    )
-                    if self.cfg.log:
-                        self.logger.log_metrics(metrics, self.global_frame, 'global_frame')
+                action, base_action, is_episode_done, metrics = self.agent.act(
+                    obs = self._get_act_obs(time_step),
+                    global_step = self.global_step, 
+                    episode_step = episode_step,
+                    eval_mode = False
+                )
+                if self.cfg.log:
+                    self.logger.log_metrics(metrics, self.global_frame, 'global_frame')
 
             print('STEP: {}'.format(self.global_step))
             print('---------')
@@ -357,7 +354,7 @@ class Workspace:
             episode_step += 1
             self._global_step += 1 
 
-@hydra.main(version_base=None, config_path='see_to_touch/configs', config_name='train_online')
+@hydra.main(version_base=None, config_path='tactile_learning/configs', config_name='train_online')
 def main(cfg: DictConfig) -> None:
     workspace = Workspace(cfg)
 

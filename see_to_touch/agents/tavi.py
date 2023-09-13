@@ -55,6 +55,8 @@ class TAVI(Agent):
         rl_learner_cfg.repr_dim = self.repr_dim(type='policy')
         self.rl_learner = hydra.utils.instantiate(
             rl_learner_cfg,
+            # repr_dim = self.repr_dim(type='policy'),
+            # action_shape = self.action_shape,
             actions_offset = True,
             hand_offset_scale_factor = self.hand_offset_scale_factor,
             arm_offset_scale_factor = self.arm_offset_scale_factor
@@ -62,13 +64,13 @@ class TAVI(Agent):
         self.base_policy = hydra.utils.instantiate(
             base_policy_cfg,
             expert_demos = self.expert_demos,
-            tactile_repr_size = self.tactile_repr.size,
+            tactile_repr_size = self.tactile_repr.size if 'tactile' in self.data_reprs else None,
         )
         self.rewarder = hydra.utils.instantiate(
             rewarder_cfg,
             expert_demos = self.expert_demos, 
-            image_encoder = self.image_encoder,
-            tactile_encoder = self.tactile_encoder
+            image_encoder = self.image_encoder if 'image'in self.data_reprs else None,
+            tactile_encoder = self.tactile_encoder if 'tactile' in self.data_reprs else None
         )
         self.explorer = hydra.utils.instantiate(
             explorer_cfg
@@ -76,13 +78,31 @@ class TAVI(Agent):
 
     def __repr__(self):
         return f"tavi_{repr(self.rl_learner)}"
+    
+    def _scale_action(self, offset_action):
+        if 'allegro' in self.data_reprs:
+            offset_action[:,:-7] *= self.hand_offset_scale_factor
+        if 'franka' in self.data_reprs or 'kinova' in self.data_reprs:
+            offset_action[:,-7:] *= self.arm_offset_scale_factor
+
+    def _print_action(self, offset_action): 
+        if 'allegro' in self.data_reprs:
+            print('HAND OFFSET ACTION: {}'.format(
+                offset_action[:,:-7]
+            ))
+        if 'franka' in self.data_reprs or 'kinova' in self.data_reprs:
+            print('ARM OFFSET ACTION: {}'.format(
+                offset_action[:,-7:]
+            ))
 
     def _check_limits(self, offset_action):
         # limits = [-0.1, 0.1]
-        hand_limits = [-self.hand_offset_scale_factor-0.2, self.hand_offset_scale_factor+0.2] 
-        arm_limits = [-self.arm_offset_scale_factor-0.02, self.arm_offset_scale_factor+0.02]
-        offset_action[:,:-7] = torch.clamp(offset_action[:,:-7], min=hand_limits[0], max=hand_limits[1])
-        offset_action[:,-7:] = torch.clamp(offset_action[:,-7:], min=arm_limits[0], max=arm_limits[1])
+        if 'allegro' in self.data_reprs:
+            hand_limits = [-self.hand_offset_scale_factor-0.2, self.hand_offset_scale_factor+0.2] 
+            offset_action[:,:-7] = torch.clamp(offset_action[:,:-7], min=hand_limits[0], max=hand_limits[1])
+        if 'franka' in self.data_reprs or 'kinova' in self.data_reprs:
+            arm_limits = [-self.arm_offset_scale_factor-0.02, self.arm_offset_scale_factor+0.02]
+            offset_action[:,-7:] = torch.clamp(offset_action[:,-7:], min=arm_limits[0], max=arm_limits[1])
         return offset_action
 
     # Will give the next action in the step
@@ -105,9 +125,9 @@ class TAVI(Agent):
             # Get the action image_obs
             obs = self._get_policy_reprs_from_obs( # This method is called with torch.no_grad() in training anyways
                 representation_types=self.policy_representations,
-                image_obs = obs['image_obs'].unsqueeze(0) / 255.,
-                tactile_repr = obs['tactile_repr'].unsqueeze(0),
-                features = obs['features'].unsqueeze(0),
+                image_obs = obs['image_obs'].unsqueeze(0) / 255. if 'image' in self.data_reprs else None,
+                tactile_repr = obs['tactile_repr'].unsqueeze(0) if 'tactile' in self.data_reprs else None,
+                features = obs['features'].unsqueeze(0) if 'allegro' in self.data_reprs or 'franka' in self.data_reprs or 'kinova' in self.data_reprs else None,
             )
 
         offset_action = self.rl_learner.act(
@@ -125,18 +145,20 @@ class TAVI(Agent):
         print('offset_action: {}'.format(offset_action))
 
         offset_action *= self.offset_mask 
-        offset_action[:,:-7] *= self.hand_offset_scale_factor
-        offset_action[:,-7:] *= self.arm_offset_scale_factor
+        # offset_action[:,:-7] *= self.hand_offset_scale_factor
+        # offset_action[:,-7:] *= self.arm_offset_scale_factor
+        self._scale_action(offset_action)
 
         # Check if the offset action is higher than the limits
         offset_action = self._check_limits(offset_action)
 
-        print('HAND OFFSET ACTION: {}'.format(
-            offset_action[:,:-7]
-        ))
-        print('ARM OFFSET ACTION: {}'.format(
-            offset_action[:,-7:]
-        ))
+        # print('HAND OFFSET ACTION: {}'.format(
+        #     offset_action[:,:-7]
+        # ))
+        # print('ARM OFFSET ACTION: {}'.format(
+        #     offset_action[:,-7:]
+        # ))
+        self._print_action(offset_action)
 
         action = base_action + offset_action
 
@@ -172,34 +194,34 @@ class TAVI(Agent):
         # Get the representations
         # We will return none for representations that are not used in training
         obs = self._get_policy_reprs_from_obs(
-            image_obs = image_obs,
-            tactile_repr = tactile_repr,
-            features = features,
+            image_obs = image_obs if 'image' in self.data_reprs else None,
+            tactile_repr = tactile_repr if 'tactile' in self.data_reprs else None,
+            features = features if 'allegro' in self.data_reprs or 'franka' in self.data_reprs or 'kinova' in self.data_reprs else None,
             representation_types=self.policy_representations
         )
 
         obs_aug = None
         if self.separate_aug:
             obs_aug = self._get_policy_reprs_from_obs(
-                image_obs = image_obs,
-                tactile_repr = tactile_repr,
-                features = features,
+                image_obs = image_obs if 'image' in self.data_reprs else None,
+                tactile_repr = tactile_repr if 'tactile' in self.data_reprs else None,
+                features = features if 'allegro' in self.data_reprs or 'franka' in self.data_reprs or 'kinova' in self.data_reprs else None,
                 representation_types=self.policy_representations
             )
 
         next_obs = self._get_policy_reprs_from_obs(
-            image_obs = next_image_obs, 
-            tactile_repr = next_tactile_repr,
-            features = next_features,
+            image_obs = next_image_obs if 'image' in self.data_reprs else None, 
+            tactile_repr = next_tactile_repr if 'tactile' in self.data_reprs else None,
+            features = next_features if 'allegro' in self.data_reprs or 'franka' in self.data_reprs or 'kinova' in self.data_reprs else None,
             representation_types=self.policy_representations
         )
 
         next_obs_aug = None
         if self.separate_aug:
             next_obs_aug = self._get_policy_reprs_from_obs(
-                image_obs = next_image_obs, 
-                tactile_repr = next_tactile_repr,
-                features = next_features,
+                image_obs = next_image_obs if 'image' in self.data_reprs else None, 
+                tactile_repr = next_tactile_repr if 'tactile' in self.data_reprs else None,
+                features = next_features if 'allegro' in self.data_reprs or 'franka' in self.data_reprs or 'kinova' in self.data_reprs else None,
                 representation_types=self.policy_representations
             )
 

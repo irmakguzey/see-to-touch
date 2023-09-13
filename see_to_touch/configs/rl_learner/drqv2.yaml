@@ -10,6 +10,7 @@ critic_target_tau: 0.01
 stddev_schedule: 0.1
 stddev_clip: 0.3
 lr: 1e-4 
+data_representations: ${data_representations}
 
 separate_aug: False
 name: drqv2

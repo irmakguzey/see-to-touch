@@ -211,41 +211,45 @@ class FrameStackWrapper(dm_env.Environment):
 
 		wrapped_obs_spec = env.observation_spec()
 
-		pixels_shape = wrapped_obs_spec['pixels'].shape
-		if len(pixels_shape) == 4:
-			pixels_shape = pixels_shape[1:]
-
 		self._obs_spec = {}
+		if 'pixels' in wrapped_obs_spec:
+			pixels_shape = wrapped_obs_spec['pixels'].shape
+			if len(pixels_shape) == 4:
+				pixels_shape = pixels_shape[1:]
 
-
-		self._obs_spec['pixels'] = specs.BoundedArray(shape=np.concatenate(
-			[[pixels_shape[2] * num_frames], pixels_shape[:2]], axis=0),
-											dtype=np.uint8,
-											minimum=0,
-											maximum=255,
-											name='pixels')
+			self._obs_spec['pixels'] = specs.BoundedArray(shape=np.concatenate(
+				[[pixels_shape[2] * num_frames], pixels_shape[:2]], axis=0),
+												dtype=np.uint8,
+												minimum=0,
+												maximum=255,
+												name='pixels')
+		if 'tactile' in wrapped_obs_spec:
+			tactile_shape = wrapped_obs_spec['tactile'].shape
+			self._obs_spec['tactile'] = specs.Array(
+				shape = (num_frames * tactile_shape[0],),
+				dtype = np.float32, 
+				name = 'tactile'
+			)
 		
-		tactile_shape = wrapped_obs_spec['tactile'].shape
-		self._obs_spec['tactile'] = specs.Array(
-			shape = (num_frames * tactile_shape[0],),
-			dtype = np.float32, 
-			name = 'tactile'
-		)
-		features_shape = wrapped_obs_spec['features'].shape
-		self._obs_spec['features'] = specs.Array(
-			shape = (num_frames * features_shape[0],),
-			dtype = np.float32, 
-			name = 'features'
-		)
+		if 'features' in wrapped_obs_spec:
+			features_shape = wrapped_obs_spec['features'].shape
+			self._obs_spec['features'] = specs.Array(
+				shape = (num_frames * features_shape[0],),
+				dtype = np.float32, 
+				name = 'features'
+			)
 
 	def _transform_observation(self, time_step):
-		assert len(self._frames) == self._num_frames
-		assert len(self._tactile_frames) == self._num_frames
-		assert len(self._features_frames) == self._num_frames
 		obs = {}
-		obs['pixels'] = np.concatenate(list(self._frames), axis=0)
-		obs['tactile'] = np.concatenate(list(self._tactile_frames), axis=0)
-		obs['features'] = np.concatenate(list(self._features_frames), axis=0)
+		if 'pixels' in self._obs_spec:
+			assert len(self._frames) == self._num_frames  
+			obs['pixels'] = np.concatenate(list(self._frames), axis=0)
+		if 'tactile' in self._obs_spec:
+			assert len(self._tactile_frames) == self._num_frames 
+			obs['tactile'] = np.concatenate(list(self._tactile_frames), axis=0)
+		if 'features' in self._obs_spec:
+			assert len(self._features_frames) == self._num_frames
+			obs['features'] = np.concatenate(list(self._features_frames), axis=0)
 		obs['goal_achieved'] = time_step.observation['goal_achieved']
 		return time_step._replace(observation=obs)
 
@@ -262,24 +266,38 @@ class FrameStackWrapper(dm_env.Environment):
 
 	def reset(self):
 		time_step = self._env.reset()
-		pixels = self._extract_pixels(time_step)
-		tactiles = self._extract_tactile_repr(time_step)
-		features = time_step.observation['features']
-		for _ in range(self._num_frames):
-			self._frames.append(pixels)
-			self._tactile_frames.append(tactiles)
-			self._features_frames.append(features)
+		if 'pixels' in self._obs_spec:
+			pixels = self._extract_pixels(time_step)
+			for _ in range(self._num_frames):
+				self._frames.append(pixels)
+		
+		if 'tactile' in self._obs_spec:
+			tactiles = self._extract_tactile_repr(time_step)
+			for _ in range(self._num_frames):
+				self._tactile_frames.append(tactiles)
+
+		if 'features' in self._obs_spec:
+			features = time_step.observation['features']
+			for _ in range(self._num_frames):
+				self._features_frames.append(features)
 
 		return self._transform_observation(time_step)
 
 	def step(self, action):
 		time_step = self._env.step(action)
-		pixels = self._extract_pixels(time_step)
-		tactiles = self._extract_tactile_repr(time_step)
-		features = time_step.observation['features']
-		self._frames.append(pixels)
-		self._tactile_frames.append(tactiles)
-		self._features_frames.append(features)
+		
+		if 'pixels' in self._obs_spec:
+			pixels = self._extract_pixels(time_step)
+			self._frames.append(pixels)
+		
+		if 'tactile' in self._obs_spec:
+			tactiles = self._extract_tactile_repr(time_step)
+			self._tactile_frames.append(tactiles)
+
+		if 'features' in self._obs_spec:
+			features = time_step.observation['features']
+			self._features_frames.append(features)
+
 		return self._transform_observation(time_step)
 
 	def observation_spec(self):

@@ -55,3 +55,9 @@ register(
     entry_point='dexterous_env.plier_clipping_env:PlierClipping',
     max_episode_steps=80
 )
+
+register(
+    id = 'MoveFranka-v1',
+    entry_point='dexterous_env.move_franka_env:MoveFranka',
+    max_episode_steps=80
+)

@@ -25,7 +25,7 @@ class Agent(ABC):
 
         # Demo based parameters
         self.data_reprs = data_representations
-        self._set_data(data_path, expert_demo_nums, data_representations)
+        self._set_data(data_path, expert_demo_nums)
 
         # Get the expert demos and set the encoders
         self._set_image_transform()
@@ -49,7 +49,7 @@ class Agent(ABC):
 
     def _set_encoders(self, image_out_dir=None, image_model_type=None, tactile_out_dir=None, tactile_model_type=None): 
         if 'image' in self.data_reprs:
-            _, self.image_encoder, _  = init_encoder_info(self.device, image_out_dir, 'image', view_num=self.view_num, model_type=image_model_type)
+            _, self.image_encoder, self.image_transform = init_encoder_info(self.device, image_out_dir, 'image', view_num=self.view_num, model_type=image_model_type)
             self.image_encoder.eval()
             for param in self.image_encoder.parameters():
                 param.requires_grad = False 

@@ -1,5 +1,5 @@
 name: see_to_touch
-channels:
+channels: 
   - conda-forge
   - pytorch
 dependencies:
@@ -25,3 +25,5 @@ dependencies:
   - wandb
   - hydra-core
   - ipdb
+  - pip:
+    - ikpy

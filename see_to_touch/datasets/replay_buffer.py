@@ -106,10 +106,7 @@ class ReplayBuffer(IterableDataset):
     
     #randomly sample an episode from the buffer
     def _sample_episode(self):
-        # print('IN _SAMPLE_EPISODE EPISODE_FNS: {}'.format(self._episode_fns))
-        # []
         eps_fn = random.choice(self._episode_fns)
-        # print('EPS_FN in _sample_episode: {}'.format(eps_fn))
         return self._episodes[eps_fn]
     
     #fetch episodes from the storage and put in the buffer
@@ -171,19 +168,19 @@ class ReplayBuffer(IterableDataset):
             image_obs = episode['pixels'][idx-1] / 255.
             next_image_obs = episode['pixels'][idx+self._nstep-1] / 255.
         else:
-            image_obs, next_image_obs = None, None
+            image_obs, next_image_obs = np.zeros(1), np.zeros(1)
 
         if 'tactile' in self._data_representations:
             tactile_repr = episode['tactile'][idx-1]  
             next_tactile_repr = episode['tactile'][idx+self._nstep-1]
         else:
-            tactile_repr, next_tactile_repr = None, None
+            tactile_repr, next_tactile_repr = np.zeros(1), np.zeros(1)
 
         if 'allegro' in self._data_representations or 'kinova' in self._data_representations or 'franka' in self._data_representations:
             features = episode['features'][idx-1]
             next_features = episode['features'][idx+self._nstep-1]
         else:
-            features, next_features = None, None
+            features, next_features = np.zeros(1), np.zeros(1)
 
         action = episode['action'][idx]
         base_action = episode['base_action'][idx]
@@ -200,7 +197,6 @@ class ReplayBuffer(IterableDataset):
 
     def __iter__(self):
         while True:
-            # print('IN _ITER_ _EPISODES: {}'.format(self._episodes))
             yield self._sample()
 
 def _worker_init_fn(worker_id):
@@ -219,7 +215,8 @@ def make_replay_loader(replay_dir, max_size, batch_size, num_workers,
                             nstep,
                             discount,
                             fetch_every=1000,
-                            save_snapshot=save_snapshot)
+                            save_snapshot=save_snapshot,
+                            data_representations=data_representations)
 
     loader = torch.utils.data.DataLoader(iterable,
                                          batch_size=batch_size,
@@ -227,7 +224,3 @@ def make_replay_loader(replay_dir, max_size, batch_size, num_workers,
                                          pin_memory=True,
                                          worker_init_fn=_worker_init_fn)
     return loader
-
-
-
-

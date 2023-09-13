@@ -9,7 +9,6 @@ from see_to_touch.models import weight_init
 
 from .rl_learner import RLLearner
 
-# Taken from https://github.com/facebookresearch/drqv2 
 class Identity(nn.Module):
     '''
     Author: Janne Spijkervet
@@ -83,7 +82,7 @@ class DRQv2(RLLearner):
     def __init__(self, action_shape, device,
                  actor, critic, critic_target, lr, critic_target_tau,
                  hand_offset_scale_factor, arm_offset_scale_factor,
-                 stddev_schedule, stddev_clip, **kwargs):
+                 stddev_schedule, stddev_clip, data_representations, **kwargs):
 
         super().__init__()
 
@@ -106,6 +105,8 @@ class DRQv2(RLLearner):
         self.stddev_clip = stddev_clip
         self.stddev_schedule = stddev_schedule
 
+        self.data_reprs = data_representations
+
         self.train()
         self.critic_target.train()
 
@@ -113,6 +114,12 @@ class DRQv2(RLLearner):
     #     self.training = training
     #     self.actor.train(training)
     #     self.critic.train(training)
+
+    def _scale_action(self, offset_action):
+        if 'allegro' in self.data_reprs:
+            offset_action[:,:-7] *= self.hand_offset_scale_factor
+        if 'franka' in self.data_reprs or 'kinova' in self.data_reprs:
+            offset_action[:,-7:] *= self.arm_offset_scale_factor
 
     def act(self, obs, base_action, global_step, eval_mode, **kwargs):
         stddev = schedule(self.stddev_schedule, global_step)
@@ -128,8 +135,9 @@ class DRQv2(RLLearner):
             dist = self.actor(next_obs, base_next_action, stddev)
 
             offset_action = dist.sample(clip=self.stddev_clip)
-            offset_action[:,:-7] *= self.hand_offset_scale_factor # NOTE: There is something wrong here?
-            offset_action[:,-7:] *= self.arm_offset_scale_factor 
+            # offset_action[:,:-7] *= self.hand_offset_scale_factor # NOTE: There is something wrong here?
+            # offset_action[:,-7:] *= self.arm_offset_scale_factor 
+            self._scale_action(offset_action)
             next_action = base_next_action + offset_action
 
             target_Q1, target_Q2 = self.critic_target(next_obs, next_action)
@@ -160,8 +168,9 @@ class DRQv2(RLLearner):
         action_offset = dist.sample(clip=self.stddev_clip)
         log_prob = dist.log_prob(action_offset).sum(-1, keepdim=True)
 
-        action_offset[:,:-7] *= self.hand_offset_scale_factor
-        action_offset[:,-7:] *= self.arm_offset_scale_factor
+        # action_offset[:,:-7] *= self.hand_offset_scale_factor
+        # action_offset[:,-7:] *= self.arm_offset_scale_factor
+        self._scale_action(action_offset)
 
         action = base_action + action_offset 
         Q1, Q2 = self.critic(obs, action)
@@ -185,19 +194,3 @@ class DRQv2(RLLearner):
     def save_snapshot(self):
         keys_to_save = ['actor', 'critic']
         payload = {k: self.__dict__[k] for k in keys_to_save}
-        return payload
-
-    # def load_snapshot(self, payload):
-    #     for k, v in payload.items():
-    #         self.__dict__[k] = v
-
-    #     self.critic_target.load_state_dict(self.critic.state_dict())
-
-    #     self.actor_opt = torch.optim.Adam(self.actor.parameters(), lr=self.lr)
-    #     self.critic_opt = torch.optim.Adam(self.critic.parameters(), lr=self.lr)
-
-    # def load_snapshot_eval(self, payload):
-    #     for k, v in payload.items():
-    #         self.__dict__[k] = v
-
-    #     self.critic_target.load_state_dict(self.critic.state_dict())
