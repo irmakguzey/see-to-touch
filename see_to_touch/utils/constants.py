@@ -2,6 +2,8 @@
 TACTILE_IMAGE_MEANS = [0.485, 0.456, 0.406]
 TACTILE_IMAGE_STDS = [0.229, 0.224, 0.225]
 
+PLAY_DATA_PATH = '/data/tactile_learning/play_data' # NOTE: Should download the tactile_learning play data for this
+
 # These constants are used to clamp 
 TACTILE_PLAY_DATA_CLAMP_MIN = -1000
 TACTILE_PLAY_DATA_CLAMP_MAX = 1000

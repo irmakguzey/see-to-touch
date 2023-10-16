@@ -34,3 +34,4 @@ dependencies:
     - dm-env
     - info-nce-pytorch
     - gym
+    - blosc
