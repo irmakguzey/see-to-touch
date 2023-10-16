@@ -107,7 +107,7 @@ class Workspace:
         if rank == 0: 
             pbar.close()
 
-@hydra.main(version_base=None,config_path='tactile_learning/configs', config_name = 'train')
+@hydra.main(version_base=None,config_path='see_to_touch/configs', config_name = 'train')
 def main(cfg : DictConfig) -> None:
     # We are only training everything distributedly
     assert cfg.distributed is True, "Use script only to train distributed"

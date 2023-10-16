@@ -9,3 +9,4 @@ from .rl_exploration import *
 from .timer import * 
 from .utils import *
 from .video_recorder import *
+from .visualization import *

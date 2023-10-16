@@ -3,7 +3,7 @@
 import torch
 
 from abc import ABC, abstractmethod
-from tactile_learning.utils import soft_update_params
+from see_to_touch.utils import soft_update_params
 
 class RLLearner(ABC): 
 

@@ -10,7 +10,6 @@ from info_nce import InfoNCE
 
 from .learner import Learner
 
-# TODO: You can turn these where you're moving things around from your __dict__ or smth
 class TemporalSSLLearner(Learner):
     def __init__(
         self,

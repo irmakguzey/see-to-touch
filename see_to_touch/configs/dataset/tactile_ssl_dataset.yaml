@@ -1,4 +1,4 @@
-_target_: tactile_learning.datasets.TactileSSLDataset
+_target_: see_to_touch.datasets.TactileSSLDataset
 data_path: ???
 tactile_information_type: whole_hand # whole_hand, stacked, single_sensor
 tactile_img_size: ${tactile_image_size} 

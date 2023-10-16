@@ -15,9 +15,9 @@ from tqdm import tqdm
 
 from holobot.constants import *
 
-from tactile_learning.tactile_data import *
-from tactile_learning.utils import *
-from tactile_learning.models import *
+from see_to_touch.tactile_data import *
+from see_to_touch.utils import *
+from see_to_touch.models import *
 
 # Class that will take all the representations and dump them to the given data directory
 
@@ -193,8 +193,8 @@ class RepresentationPreprocessor: # It should only take image and tactile inout 
 if __name__ == '__main__':
     # preprocessor = RepresentationPreprocessor(
     #     data_path='/home/irmak/Workspace/Holo-Bot/extracted_data/cup_picking/after_rss',
-    #     tactile_out_dir='/home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.01.28/12-32_tactile_byol_bs_512_tactile_play_data_alexnet_pretrained_duration_120',
-    #     image_out_dir='/home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.04.05/00-59_image_byol_bs_32_cup_picking_after_rss',
+    #     tactile_out_dir='/home/irmak/Workspace/tactile-learning/see_to_touch/out/2023.01.28/12-32_tactile_byol_bs_512_tactile_play_data_alexnet_pretrained_duration_120',
+    #     image_out_dir='/home/irmak/Workspace/tactile-learning/see_to_touch/out/2023.04.05/00-59_image_byol_bs_32_cup_picking_after_rss',
     #     view_num=1,
     #     demos_to_use=[17], #[13,14,15,16,17,18],
     #     representation_types=['image','tactile','kinova','allegro']
@@ -205,8 +205,8 @@ if __name__ == '__main__':
 
     preprocessor = RepresentationPreprocessor(
         data_path='/home/irmak/Workspace/Holo-Bot/extracted_data/cup_picking/after_rss',
-        tactile_out_dir='/home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.01.28/12-32_tactile_byol_bs_512_tactile_play_data_alexnet_pretrained_duration_120',
-        image_out_dir='/home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.04.05/00-59_image_byol_bs_32_cup_picking_after_rss',
+        tactile_out_dir='/home/irmak/Workspace/tactile-learning/see_to_touch/out/2023.01.28/12-32_tactile_byol_bs_512_tactile_play_data_alexnet_pretrained_duration_120',
+        image_out_dir='/home/irmak/Workspace/tactile-learning/see_to_touch/out/2023.04.05/00-59_image_byol_bs_32_cup_picking_after_rss',
         view_num=1,
         demos_to_use=[13,14,15,16,18],
         representation_types=['image','tactile','kinova','allegro']

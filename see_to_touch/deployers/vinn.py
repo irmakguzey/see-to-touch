@@ -1,18 +1,13 @@
 # Helper script to load models
 import cv2
-import glob
 import numpy as np
 import os
 import pickle
 import torch
-import torchvision.transforms as T
 
-
-from omegaconf import OmegaConf
 from tqdm import tqdm 
 
 from holobot.constants import *
-
 from holobot.robot.allegro.allegro_kdl import AllegroKDL
 
 from see_to_touch.models import *
@@ -220,21 +215,6 @@ class VINN(Deployer):
         return action
     
     def _get_open_loop_action(self, state_dict, visualize):
-        # action = dict()
-
-        # if 'allegro' in self.data_reprs:
-        #     demo_id, action_id = self.data['hand_actions']['indices'][self.state_id+self.open_loop_start_id] 
-        #     hand_action = self.data['hand_actions']['values'][demo_id][action_id] # Get the next commanded action (commanded actions are saved in that timestamp)
-
-        # if 'franka' in self.data_reprs or 'kinova' in self.data_reprs:
-        #     _, arm_id = self.data['arm']['indices'][self.state_id+self.open_loop_start_id] 
-        #     arm_action = self.data['arm']['values'][demo_id][arm_id] # Get the next saved kinova_state
-
-        # for data in self.data_reprs:
-        #     if data == 'allegro':
-        #         action[data] = hand_action
-        #     if data == 'franka' or data == 'kinova':
-        #         action[data] = arm_action
 
         action = self._get_action_dict_from_data(self.state_id + self.open_loop_start_id)
 
@@ -424,45 +404,3 @@ class VINN(Deployer):
             return visualization_data
         else:
             return data_dict
-
-                
-
-        demo_id, tactile_id = self.data['tactile']['indices'][id]
-        _, allegro_tip_id = self.data['allegro_tip_states']['indices'][id]
-        _, kinova_id = self.data['kinova']['indices'][id]
-        _, image_id = self.data['image']['indices'][id]
-        _, allegro_state_id = self.data['allegro_joint_states']['indices'][id]
-
-        tactile_value = self.data['tactile']['values'][demo_id][tactile_id] # This should be (N,16,3)
-        allegro_tip_position = self.data['allegro_tip_states']['values'][demo_id][allegro_tip_id] # This should be (M*3,)
-        kinova_state = self.data['kinova']['values'][demo_id][kinova_id]
-        image = self._load_dataset_image(demo_id, image_id)
-        
-        if visualize: # TODO: This could give error - ignore this for now
-            tactile_image = self.tactile_img.get_tactile_image_for_visualization(tactile_value) 
-            kinova_cart_pos = arm_state[:3] # Only position is used
-            vis_image = self.inv_image_transform(image).numpy().transpose(1,2,0)
-            vis_image = cv2.cvtColor(vis_image*255, cv2.COLOR_RGB2BGR)
-
-            visualization_data = dict(
-                image = vis_image,
-                kinova = kinova_cart_pos, 
-                allegro = allegro_tip_position, 
-                tactile_values = tactile_value,
-                tactile_image = tactile_image
-            )
-            return visualization_data
-
-        else:
-            allegro_joint_torque = self.data['allegro_joint_states']['torques'][demo_id][allegro_state_id] # This is the torque to be used
-            robot_states = dict(
-                allegro = allegro_tip_position,
-                kinova = kinova_state,
-                torque = allegro_joint_torque
-            )
-            data = dict(
-                image = image,
-                tactile_value = tactile_value, 
-                robot_states = robot_states
-            )
-            return data

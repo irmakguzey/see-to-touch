@@ -66,5 +66,5 @@ experiment: ${now:%Y.%m.%d}T${now:%H-%M}_${task.name}_${rl_learner.name}_${base_
 # hydra configuration - should be received separately
 hydra:
     run:
-        dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/${now:%Y.%m.%d}/${now:%H-%M}_${experiment}
+        dir: /home/irmak/Workspace/tactile-learning/see_to_touch/out/${now:%Y.%m.%d}/${now:%H-%M}_${experiment}
 

@@ -8,7 +8,6 @@ import torch.nn.functional as F
 
 from torchvision import transforms as T
 
-
 # Taken from https://github.com/lucidrains/byol-pytorch and got modified 
 
 # helper functions

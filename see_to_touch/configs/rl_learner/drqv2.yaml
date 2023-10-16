@@ -1,4 +1,4 @@
-_target_: tactile_learning.agents.rl_learners.drqv2.DRQv2
+_target_: see_to_touch.agents.rl_learners.drqv2.DRQv2
 action_shape: ??? # To be determined in the training code
 repr_dim: ???
 device: ${device}
@@ -16,13 +16,13 @@ separate_aug: False
 name: drqv2
 
 actor_cfg:
-  _target_: tactile_learning.agents.rl_learners.drqv2.Actor
+  _target_: see_to_touch.agents.rl_learners.drqv2.Actor
   action_shape: ${rl_learner.action_shape}
   repr_dim: ${rl_learner.repr_dim}
   hidden_dim: 64
 
 critic_cfg:
-  _target_: tactile_learning.agents.rl_learners.drqv2.Critic
+  _target_: see_to_touch.agents.rl_learners.drqv2.Critic
   action_shape: ${rl_learner.action_shape}
   repr_dim: ${rl_learner.repr_dim}
   hidden_dim: 64

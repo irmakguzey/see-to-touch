@@ -9,17 +9,14 @@ import torch
 import torchvision.transforms as T
 
 from pathlib import Path
-from PIL import Image as im
 from omegaconf import OmegaConf
-from tqdm import tqdm 
 
 from holobot.constants import *
-from holobot.utils.network import ZMQCameraSubscriber
 from holobot.robot.allegro.allegro_kdl import AllegroKDL
 
-from tactile_learning.models import * 
-from tactile_learning.tactile_data import *
-from tactile_learning.utils import *
+from see_to_touch.models import * 
+from see_to_touch.tactile_data import *
+from see_to_touch.utils import *
 
 from .deployer import Deployer
 

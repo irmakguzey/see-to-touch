@@ -1,5 +1,5 @@
-_target_: tactile_learning.deployers.OpenLoop
+_target_: see_to_touch.deployers.OpenLoop
 data_path: ???
-apply_hand_states: false # For fingers touching yourself this should be true
+apply_hand_states: false 
 demo_to_run: 21
 data_representations: ${data_representations}

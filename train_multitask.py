@@ -14,13 +14,11 @@ from pathlib import Path
 from tqdm import tqdm 
 
 from PIL import Image
-# Custom imports 
-# from tactile_learning.datasets import get_dataloaders
 
-# from tactile_learning.learners import init_learner
-from tactile_learning.datasets import *
-from tactile_learning.models import *
-from tactile_learning.utils import *
+# Custom imports
+from see_to_touch.datasets import *
+from see_to_touch.models import *
+from see_to_touch.utils import *
 
 
 class Workspace:
@@ -40,8 +38,6 @@ class Workspace:
         self.data_path = cfg.data_path
         self._env_setup(tactile_repr_dim) # Should be set here
 
-
-        # self.agent = hydra.utils.instantiate(cfg.agent)
         self._initialize_agent()
 
         # TODO: Timer? - should we set a timer - I think we need this for real world demos
@@ -414,7 +410,7 @@ class Workspace:
             episode_step += 1
             self._global_step += 1 
 
-@hydra.main(version_base=None, config_path='tactile_learning/configs', config_name='train_multitask')
+@hydra.main(version_base=None, config_path='see_to_touch/configs', config_name='train_multitask')
 def main(cfg: DictConfig) -> None:
     workspace = Workspace(cfg)
 

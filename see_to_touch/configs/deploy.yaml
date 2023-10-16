@@ -6,4 +6,4 @@ loop: true
 frequency: 4
 deployment_dump_dir: null
 data_representations: ['image','franka']
-data_path: /home/irmak/Workspace/Holo-Bot/extracted_data/franka_data_first # User should fill this
+data_path: see_to_touch/tasks/<task-name> # User should fill this

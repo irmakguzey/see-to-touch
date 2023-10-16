@@ -1,5 +1,5 @@
 # Taken from https://github.com/denisyarats/drq 
-_target_: tactile_learning.agents.rl_learners.drq.DRQ
+_target_: see_to_touch.agents.rl_learners.drq.DRQ
 repr_dim: ???
 action_shape: ??? # To be determined in the training code
 device: ${device}
@@ -16,7 +16,7 @@ separate_aug: True
 name: drq
 
 actor_cfg:
-  _target_: tactile_learning.agents.rl_learners.drq.Actor
+  _target_: see_to_touch.agents.rl_learners.drq.Actor
   action_shape: ${rl_learner.action_shape}
   repr_dim: ${rl_learner.repr_dim}
   hidden_depth: 2
@@ -24,7 +24,7 @@ actor_cfg:
   log_std_bounds: [-15, 1] # [-10, 2]
 
 critic_cfg:
-  _target_: tactile_learning.agents.rl_learners.drq.Critic
+  _target_: see_to_touch.agents.rl_learners.drq.Critic
   action_shape: ${rl_learner.action_shape}
   repr_dim: ${rl_learner.repr_dim}
   hidden_dim: 64

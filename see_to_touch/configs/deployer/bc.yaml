@@ -1,4 +1,4 @@
-_target_: tactile_learning.deployers.BC
+_target_: see_to_touch.deployers.BC
 data_path: ??? # This is not used for this particular module though
 deployment_dump_dir: deployment/dump/dir # User should change
 out_dir: /bc/encoders/out/dir

@@ -1,12 +1,8 @@
-_target_: tactile_learning.deployers.VINN
+_target_: see_to_touch.deployers.VINN
 data_path: ???
 
 # Directories to change by the user depending on where they saved the data
 deployment_dump_dir: ???
-# tactile_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.01.28/12-32_tactile_byol_bs_512_tactile_play_data_alexnet_pretrained_duration_120
-# tactile_model_type: byol
-# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.14/17-53_temporal_ssl_bs_32_epochs_1000_view_0_mint_opening_frame_diff_5_resnet
-# image_model_type: temporal
 tactile_out_dir: null 
 tactile_model_type: null
 image_out_dir: null

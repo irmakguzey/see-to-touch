@@ -71,7 +71,7 @@ class Deploy:
             except KeyboardInterrupt:
                 self.module.save_deployment() # This is supposed to save all the representaitons and run things 
 
-@hydra.main(version_base=None, config_path='tactile_learning/configs', config_name='deploy')
+@hydra.main(version_base=None, config_path='see_to_touch/configs', config_name='deploy')
 def main(cfg : DictConfig) -> None:
 
     deployer = hydra.utils.instantiate(

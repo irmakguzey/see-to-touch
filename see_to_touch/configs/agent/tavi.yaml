@@ -1,5 +1,5 @@
 # @package agent
-_target_: tactile_learning.agents.TAVI
+_target_: see_to_touch.agents.TAVI
 # Base policy parameters
 data_path: ${data_path} # Path to hold all the preprocessed demos
 expert_demo_nums: ${expert_demo_nums} # Demo to get the base action from
@@ -18,11 +18,6 @@ experiment_name: ${experiment}
 view_num: ${camera_num}
 device: ${device}
 num_expl_steps: ${num_seed_frames}
-
-# RL Learner parameters - will be moved to the rl learners
-# lr: 1e-4 # It was 1e-4 before 
-# feature_dim: 512
-# hidden_dim: 64
 
 data_representations: ${data_representations}
 

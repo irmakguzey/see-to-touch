@@ -1,8 +1,7 @@
-# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.04/21-28_temporal_ssl_bs_32_epochs_1000_lr_1e-05_card_flipping_frame_diff_5_resnet
 image_out_dir: null # Input the model weight path here
 image_model_type: temporal
 
-vinn_image_out_dir: 2023.06.07-17-45_image_byol_card_flipping_view_0_resnet
+vinn_image_out_dir: null
 vinn_image_model_type: byol
 
 data_path: /see_to_touch/tasks/sponge_flipping

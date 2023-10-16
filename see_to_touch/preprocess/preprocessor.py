@@ -1,24 +1,19 @@
 import glob
 
 
-from tactile_learning.datasets import *
+from see_to_touch.datasets import *
 # Main preprocessor module
 # It gets each module's preprocessor, and preprocesses all of them
 
 class Preprocessor:
     def __init__(self, data_path, modules, 
                  dump_data_indices=False, process_single_demo=False,
-                 human_data=None, shorten_demo=None, repr_preprcessor=None, 
                  **kwargs):
         
         self.data_path = data_path
         self.modules = modules
         self.dump_data_indices = dump_data_indices
         self.process_single_demo = process_single_demo
-
-        # self.human_data = human_data # TODO: Add these
-        # self.shorten_demo = shorten_demo # TODO: Add these
-        # self.repr_preprocess = repr_preprcessor # TODO: Add these
 
     def apply(self):
 
@@ -60,8 +55,6 @@ class Preprocessor:
         return module_key
 
     def dump_indices(self):
-        # TODO: add shorteninig part
-
         self._reset_indices()
 
         latest_key = self._find_latest_module()
@@ -106,8 +99,6 @@ class Preprocessor:
             # If not add update the indices array of each module
             for module in self.modules.values():
                 module.update_indices()
-
-            # print('--------')
 
         for module in self.modules.values():
             module.dump_data_indices()

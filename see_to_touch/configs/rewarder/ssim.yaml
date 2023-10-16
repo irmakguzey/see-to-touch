@@ -1,4 +1,4 @@
-_target_: tactile_learning.agents.rewarder.ssim.SSIM
+_target_: see_to_touch.agents.rewarder.ssim.SSIM
 expert_demos: ???
 image_encoder: null 
 tactile_encoder: null

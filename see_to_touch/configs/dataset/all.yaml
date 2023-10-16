@@ -1,4 +1,4 @@
-_target_: tactile_learning.datasets.TactileVisionActionDataset
+_target_: see_to_touch.datasets.TactileVisionActionDataset
 data_path: ???
 tactile_information_type: whole_hand #whole_hand, stacked - bc we use alexnet now
 tactile_img_size: ${tactile_image_size}

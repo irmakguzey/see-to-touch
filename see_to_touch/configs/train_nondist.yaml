@@ -27,7 +27,7 @@ num_workers: 4
 # Data path to be set
 object: mint_opening
 experiment: ${learner_type}_${object}_view_${vision_view_num} # For now let's only train resnet
-data_dir: /home/irmak/Workspace/Holo-Bot/extracted_data/${object}
+data_dir: /see_to_touch/tasks/<task-name>
 checkpoint_dir: ??? # Will be set to hydra dir inside the code
 
 # logger
@@ -37,4 +37,4 @@ log_frequency: 1
 # hydra configuration - should be received separately
 hydra:
     run:
-        dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/${now:%Y.%m.%d}/${now:%H-%M}_${experiment}
+        dir: /home/irmak/Workspace/tactile-learning/see_to_touch/out/${now:%Y.%m.%d}/${now:%H-%M}_${experiment}

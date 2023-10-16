@@ -10,7 +10,7 @@ import torchvision.transforms as T
 from torch.utils import data
 from torchvision.datasets.folder import default_loader as loader 
 
-from tactile_learning.utils import load_data
+from see_to_touch.utils import load_data
 
 class SequentialRepresentationsActions(data.Dataset):
     def __init__(

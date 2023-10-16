@@ -1,5 +1,5 @@
 # @package agent
-_target_: tactile_learning.agents.MultitaskTAVI
+_target_: see_to_touch.agents.MultitaskTAVI
 # Base policy parameters
 data_path: ${data_path} # Path to hold all the preprocessed demos
 expert_demo_nums: ${expert_demo_nums} # Demo to get the base action from

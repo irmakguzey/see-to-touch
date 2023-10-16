@@ -1,4 +1,4 @@
-_target_: tactile_learning.datasets.TemporalVisionJointDiffDataset
+_target_: see_to_touch.datasets.TemporalVisionJointDiffDataset
 data_path: ???
 vision_view_num: ${vision_view_num}
 vision_img_size: ${vision_image_size}

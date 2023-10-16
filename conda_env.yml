@@ -27,3 +27,10 @@ dependencies:
   - ipdb
   - pip:
     - ikpy
+    - imageio
+    - POT
+    - scikit-image
+    - scikit-learn
+    - dm-env
+    - info-nce-pytorch
+    - gym

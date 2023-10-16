@@ -1,26 +1,25 @@
 
 image_out_dir: 
-  - /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.04/21-28_temporal_ssl_bs_32_epochs_1000_lr_1e-05_card_flipping_frame_diff_5_resnet
-  - /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.02/21-37_temporal_ssl_bs_32_epochs_1000_lr_1e-05_plier_picking_frame_diff_8
-  - /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.06.14/17-53_temporal_ssl_bs_32_epochs_1000_view_0_mint_opening_frame_diff_5_resnet
+  - null
+  - null 
+  - null
 image_model_type: temporal
 
 data_path: 
-  - /home/irmak/Workspace/Holo-Bot/extracted_data/card_flipping
-  - /home/irmak/Workspace/Holo-Bot/extracted_data/plier_picking
-  - /home/irmak/Workspace/Holo-Bot/extracted_data/mint_opening
+  - /see_to_touch/tasks/tasks1 # Input task name
+  - /see_to_touch/tasks/tasks2
+  - /see_to_touch/tasks/tasks3
 
 name: multi_task
 task_name: MultiTask-v1
 camera_num: 0
 
 expert_demo_nums: 
-  - [24]
-  - [15]
-  - [11]
+  - [] # Should insert desired expert demo number here
+  - []
+  - []
 
-# These need to be changed as well (Assume they are the same?)
-arm_offset_scale_factor: 
+arm_offset_scale_factor: # Should modify each of these separately
   - 0.07
   - 0.05
   - 0.06

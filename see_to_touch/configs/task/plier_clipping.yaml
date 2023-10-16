@@ -1,4 +1,3 @@
-# image_out_dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/2023.08.31/18-26_temporal_ssl_bs_32_epochs_1000_view_0_plier_clipping_success_frame_diff_5_resnet # peg insertion 
 image_out_dir: null # Input the weight path here
 image_model_type: temporal
 

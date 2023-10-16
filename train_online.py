@@ -354,7 +354,7 @@ class Workspace:
             episode_step += 1
             self._global_step += 1 
 
-@hydra.main(version_base=None, config_path='tactile_learning/configs', config_name='train_online')
+@hydra.main(version_base=None, config_path='see_to_touch/configs', config_name='train_online')
 def main(cfg: DictConfig) -> None:
     workspace = Workspace(cfg)
 

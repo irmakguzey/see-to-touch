@@ -1,4 +1,4 @@
-_target_: tactile_learning.agents.rewarder.euclidean.Euclidean
+_target_: see_to_touch.agents.rewarder.euclidean.Euclidean
 expert_demos: ???
 image_encoder: null 
 tactile_encoder: null

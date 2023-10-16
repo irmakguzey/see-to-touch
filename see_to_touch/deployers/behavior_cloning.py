@@ -1,30 +1,14 @@
 # Helper script to load models
 import cv2
-import glob
-import matplotlib.pyplot as plt
-import numpy as np
 import os
-import pickle
 import torch
 import torchvision.transforms as T
-import torch.nn.functional as F
-import torch.nn as nn
 
-from PIL import Image as im
 from omegaconf import OmegaConf
-from tqdm import tqdm 
-from torchvision.datasets.folder import default_loader as loader
-from torchvision import models
 
-from holobot.constants import *
-from holobot.utils.network import ZMQCameraSubscriber
-from holobot.robot.allegro.allegro_kdl import AllegroKDL
-
-from torchvision.transforms.functional import crop
-
-from tactile_learning.models import load_model
-from tactile_learning.utils import *
-from tactile_learning.tactile_data import *
+from see_to_touch.models import load_model
+from see_to_touch.utils import *
+from see_to_touch.tactile_data import *
 
 from .deployer import Deployer
 

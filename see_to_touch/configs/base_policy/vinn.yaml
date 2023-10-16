@@ -1,4 +1,4 @@
-_target_: tactile_learning.agents.base_policy.vinn.VINN
+_target_: see_to_touch.agents.base_policy.vinn.VINN
 expert_demos: ???
 tactile_repr_size: ???
 image_out_dir: ${task.vinn_image_out_dir}

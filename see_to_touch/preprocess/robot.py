@@ -10,7 +10,7 @@ from tqdm import tqdm
 from .prep_module import PreprocessorModule
 from holobot.robot.allegro.allegro_kdl import AllegroKDL
 
-from tactile_learning.utils import MODALITY_TYPES, PREPROCESS_MODALITY_DUMP_NAMES, PREPROCESS_MODALITY_LOAD_NAMES
+from see_to_touch.utils import MODALITY_TYPES
 
 # preprocessor module for both robot arm and the hand
 

@@ -1,4 +1,4 @@
-_target_: tactile_learning.agents.rewarder.sinkhorn_cosine.SinkhornEuclidean
+_target_: see_to_touch.agents.rewarder.sinkhorn_cosine.SinkhornEuclidean
 expert_demos: ???
 image_encoder: ??? 
 tactile_encoder: ???

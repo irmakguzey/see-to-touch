@@ -19,7 +19,7 @@ num_train_frames: 2010
 num_seed_frames: 200
 
 task_make_fn:
-  _target_: tactile_learning.environments.make
+  _target_: see_to_touch.environments.make
   name: ${suite.task_name}
   tactile_out_dir: ${tactile_out_dir}
   tactile_model_type: ${tactile_model_type}

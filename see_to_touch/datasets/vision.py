@@ -6,7 +6,7 @@ import torchvision.transforms as T
 from torchvision.datasets.folder import default_loader as loader 
 from torch.utils import data
 
-from tactile_learning.utils import load_data, crop_transform, VISION_IMAGE_MEANS, VISION_IMAGE_STDS
+from see_to_touch.utils import load_data, crop_transform, VISION_IMAGE_MEANS, VISION_IMAGE_STDS
 
 # Vision only dataset
 class VisionDataset(data.Dataset):

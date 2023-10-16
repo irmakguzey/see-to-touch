@@ -25,10 +25,8 @@ world_size: 1
 num_gpus: 4
 
 # Data path to be set
-object: plier_clipping_success #mint_opening
-experiment: ${learner_type}_bs_${batch_size}_epochs_${train_epochs}_view_${vision_view_num}_${object}_frame_diff_${dataset.frame_diff}_resnet # Name of the experiment that the models are saved
-data_dir: /home/irmak/Workspace/Holo-Bot/extracted_data/${object}
-# data_dir: /data/tactile_dexterity/play_data
+experiment: ${learner_type}_bs_${batch_size}_epochs_${train_epochs}_view_${vision_view_num}_frame_diff_${dataset.frame_diff}_resnet # Name of the experiment that the models are saved
+data_dir: /see_to_touch/tasks/<task-name>
 checkpoint_dir: ??? # Will be set to hydra dir inside the code
 
 # logger
@@ -38,4 +36,4 @@ log_frequency: 1
 # hydra configuration - should be received separately
 hydra:
     run:
-        dir: /home/irmak/Workspace/tactile-learning/tactile_learning/out/${now:%Y.%m.%d}/${now:%H-%M}_${experiment}
+        dir: /home/irmak/Workspace/tactile-learning/see_to_touch/out/${now:%Y.%m.%d}/${now:%H-%M}_${experiment}
