@@ -187,21 +187,3 @@ class TemporalVisionJointDiffDataset(data.Dataset): # Class to train an encoder 
         joint_diff = self._get_joint_diff(index)
 
         return curr_image, next_image, joint_diff
-    
-if __name__ == '__main__':
-    tempdset = TemporalVisionJointDiffDataset(
-        data_path = '/home/irmak/Workspace/Holo-Bot/extracted_data/plier_picking',
-        vision_view_num = 0,
-        vision_img_size = 480,
-        frame_diff = 8
-    )
-    import matplotlib.pyplot as plt
-    img1, img2, joint_diff = tempdset.__getitem__(20)
-    _, img3, _ = tempdset.__getitem__(21)
-    plt.imshow(np.transpose(img1.numpy(), (1,2,0)))
-    plt.savefig('img1.png')
-    plt.imshow(np.transpose(img2.numpy(), (1,2,0)))
-    plt.savefig('img2.png') 
-    plt.imshow(np.transpose(img3.numpy(), (1,2,0)))
-    plt.savefig('img3.png') 
-    print(joint_diff)

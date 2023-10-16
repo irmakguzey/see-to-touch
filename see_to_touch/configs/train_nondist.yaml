@@ -37,4 +37,4 @@ log_frequency: 1
 # hydra configuration - should be received separately
 hydra:
     run:
-        dir: /home/irmak/Workspace/tactile-learning/see_to_touch/out/${now:%Y.%m.%d}/${now:%H-%M}_${experiment}
+        dir: see_to_touch/out/${now:%Y.%m.%d}/${now:%H-%M}_${experiment}

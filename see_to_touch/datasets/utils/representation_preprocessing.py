@@ -189,29 +189,3 @@ class RepresentationPreprocessor: # It should only take image and tactile inout 
             robot_states = robot_states
         )
         return data
-    
-if __name__ == '__main__':
-    # preprocessor = RepresentationPreprocessor(
-    #     data_path='/home/irmak/Workspace/Holo-Bot/extracted_data/cup_picking/after_rss',
-    #     tactile_out_dir='/home/irmak/Workspace/tactile-learning/see_to_touch/out/2023.01.28/12-32_tactile_byol_bs_512_tactile_play_data_alexnet_pretrained_duration_120',
-    #     image_out_dir='/home/irmak/Workspace/tactile-learning/see_to_touch/out/2023.04.05/00-59_image_byol_bs_32_cup_picking_after_rss',
-    #     view_num=1,
-    #     demos_to_use=[17], #[13,14,15,16,17,18],
-    #     representation_types=['image','tactile','kinova','allegro']
-    # )
-    # preprocessor.get_all_representations()
-    # print(f'Dumping - all_representations.shape: {preprocessor.all_representations.shape}')
-    # preprocessor.dump_all_representations(file_name='test_representations.pkl')
-
-    preprocessor = RepresentationPreprocessor(
-        data_path='/home/irmak/Workspace/Holo-Bot/extracted_data/cup_picking/after_rss',
-        tactile_out_dir='/home/irmak/Workspace/tactile-learning/see_to_touch/out/2023.01.28/12-32_tactile_byol_bs_512_tactile_play_data_alexnet_pretrained_duration_120',
-        image_out_dir='/home/irmak/Workspace/tactile-learning/see_to_touch/out/2023.04.05/00-59_image_byol_bs_32_cup_picking_after_rss',
-        view_num=1,
-        demos_to_use=[13,14,15,16,18],
-        representation_types=['image','tactile','kinova','allegro']
-    )
-    preprocessor.get_all_representations()
-    print(f'Dumping - all_representations.shape: {preprocessor.all_representations.shape}')
-    preprocessor.dump_all_representations(file_name='train_representations.pkl')
-
