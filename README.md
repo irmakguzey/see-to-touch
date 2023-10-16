@@ -23,6 +23,8 @@ Demonstrations are collected through the [Holo-Dex](https://github.com/SridharPa
 The following assumes our current working directory is the root folder of this project repository; tested on Ubuntu 20.04 LTS (amd64).
 
 ### Setting up the project environments
+  **NOTE**: This codebase is dependant on a different version of [Holo-Dex](https://github.com/SridharPandian/Holo-Dex) (`holobot`) framework which is not yet publicized and few of the packages such as `AllegroKDL` should be separately installed from Holo-Dex repository.
+
 - Install the project environment:
   ```
   conda env create --file=conda_env.yml
@@ -38,6 +40,12 @@ The following assumes our current working directory is the root folder of this p
   ```
   This command should be done inside the conda environment.
   You can test if the project package has been installed correctly by running `import see_to_touch` from a python shell. 
+- Install the `dexterous_env` package by using `setup.py`. This package involves the created robot environments.
+  ```
+  cd envs
+  pip install -e .
+  ```
+  `dexterous_env` directory is located under `envs` directory from the root of this repo.
 - To enable logging, log in with a `wandb` account:
   ```
   wandb login
