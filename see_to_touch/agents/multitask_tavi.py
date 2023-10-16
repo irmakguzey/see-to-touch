@@ -293,7 +293,7 @@ class MultitaskTAVI(MultitaskAgent):
         plt.ylabel('Observation Timesteps')
         plt.title(file_name)
 
-        dump_dir = Path('/home/irmak/Workspace/tactile-learning/online_training_outs/costs') / self.experiment_name
+        dump_dir = Path('online_training_outs/costs') / self.experiment_name
         os.makedirs(dump_dir, exist_ok=True)
         dump_file = os.path.join(dump_dir, file_name)
         plt.savefig(dump_file, bbox_inches='tight')

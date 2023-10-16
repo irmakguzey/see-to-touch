@@ -67,24 +67,3 @@ class SequentialRepresentationsActions(data.Dataset):
         act = self._get_actions(index)
         
         return torch.FloatTensor(obs), act
-    
-if __name__ == '__main__':
-    dset = SequentialRepresentationsActions(
-        seq_length=3,
-        data_path = '/home/irmak/Workspace/Holo-Bot/extracted_data/bowl_picking/after_rss',
-        demos_to_use=[22,24,26,34,28,29],
-        dset_type='all'
-    ) 
-    print(len(dset))
-    dataloader = data.DataLoader(dset, 
-                                batch_size  = 16, 
-                                shuffle     = True, 
-                                num_workers = 8,
-                                pin_memory  = True)
-
-    batch = next(iter(dataloader))
-    print('batch[0].shape: {}, batch[1].shape: {}'.format(
-        batch[0].shape, batch[1].shape # it should be 16 + 7 (for each joint)
-    ))
-
-
