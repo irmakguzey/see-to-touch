@@ -17,12 +17,13 @@ class TactileVisionActionDataset(data.Dataset):
         tactile_information_type,
         tactile_img_size,
         vision_view_num,
+        data_representations=['image','tactile','allegro','franka'],
         vision_img_size=480
     ):
         super().__init__()
         self.roots = glob.glob(f'{data_path}/demonstration_*')
         self.roots = sorted(self.roots)
-        self.data = load_data(self.roots, demos_to_use=[])
+        self.data = load_data(self.roots, demos_to_use=[], representations=data_representations)
         assert tactile_information_type in ['stacked', 'whole_hand', 'single_sensor'], 'tactile_information_type can either be "stacked", "whole_hand" or "single_sensor"'
         self.tactile_information_type = tactile_information_type
         self.vision_view_num = vision_view_num
@@ -91,15 +92,15 @@ class TactileVisionActionDataset(data.Dataset):
             tactile_values = tactile_values
         )
 
-    # Gets the kinova states and the commanded joint states for allegro
+    # Gets the arm states and the commanded joint states for allegro
     def _get_action(self, index):
-        demo_id, allegro_action_id = self.data['allegro_actions']['indices'][index]
-        allegro_action = self.data['allegro_actions']['values'][demo_id][allegro_action_id]
+        demo_id, allegro_action_id = self.data['hand_actions']['indices'][index]
+        allegro_action = self.data['hand_actions']['values'][demo_id][allegro_action_id]
 
-        _, kinova_id = self.data['kinova']['indices'][index]
-        kinova_action = self.data['kinova']['values'][demo_id][kinova_id]
+        _, arm_id = self.data['arm']['indices'][index]
+        arm_action = self.data['arm']['values'][demo_id][arm_id]
 
-        total_action = np.concatenate([allegro_action, kinova_action], axis=-1)
+        total_action = np.concatenate([allegro_action, arm_action], axis=-1)
         return torch.FloatTensor(total_action) # These values are already quite small so we'll not normalize them
 
     def __getitem__(self, index):
@@ -119,13 +120,14 @@ class TemporalVisionJointDiffDataset(data.Dataset): # Class to train an encoder 
         data_path,
         vision_view_num,
         vision_img_size,
-        frame_diff # Number of frame differences
+        frame_diff, # Number of frame differences
+        data_representations=['image','tactile','allegro','franka']
     ):
 
         super().__init__()
         self.roots = glob.glob(f'{data_path}/demonstration_*')
         self.roots = sorted(self.roots)
-        self.data = load_data(self.roots, demos_to_use=[])
+        self.data = load_data(self.roots, demos_to_use=[], representations=data_representations)
         self.view_num = vision_view_num
         self.img_size = vision_img_size
         self.frame_diff = frame_diff
@@ -144,19 +146,19 @@ class TemporalVisionJointDiffDataset(data.Dataset): # Class to train an encoder 
     def __len__(self):
         return len(self.data['image']['indices']) - self.frame_diff
 
-    def _get_joint_state(self, index, kinova_index=None):
-        demo_id, allegro_id = self.data['allegro_joint_states']['indices'][index]
-        allegro_action = self.data['allegro_joint_states']['values'][demo_id][allegro_id]
-        _, kinova_id = self.data['kinova']['indices'][index]
-        kinova_action = self.data['kinova']['values'][demo_id][kinova_id]
+    def _get_joint_state(self, index):
+        demo_id, allegro_id = self.data['hand_joint_states']['indices'][index]
+        allegro_action = self.data['hand_joint_states']['values'][demo_id][allegro_id]
+        _, arm_id = self.data['arm']['indices'][index]
+        arm_action = self.data['arm']['values'][demo_id][arm_id]
 
-        total_state = np.concatenate([allegro_action, kinova_action], axis=-1)
+        total_state = np.concatenate([allegro_action, arm_action], axis=-1)
         return total_state
 
-    # Gets the kinova states and the commanded joint states for allegro
+    # Gets the arm states and the commanded joint states for hand
     def _get_joint_diff(self, index):
         curr_joint_state = self._get_joint_state(index)
-        closest_joint_state = self._find_the_closest_last_frame(index, data_type='kinova')
+        closest_joint_state = self._find_the_closest_last_frame(index, data_type='arm')
         next_joint_state = self._get_joint_state(closest_joint_state)
 
         joint_state_diff = next_joint_state - curr_joint_state
@@ -183,7 +185,6 @@ class TemporalVisionJointDiffDataset(data.Dataset): # Class to train an encoder 
         curr_image = self._get_image(index)
         closest_img_id = self._find_the_closest_last_frame(index, data_type = 'image')
         next_image = self._get_image(closest_img_id)
-
         joint_diff = self._get_joint_diff(index)
 
         return curr_image, next_image, joint_diff

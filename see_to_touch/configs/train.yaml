@@ -9,6 +9,7 @@ device: cuda
 
 learner_type: temporal_ssl # Can be bet, bc_gmm, image_byol, tactile_stacked_byol # tactile_stacked_byol tactile_linear_byol, bc, tactile_byol
 self_supervised: false
+data_representations: ['image', 'tactile', 'allegro', 'franka']
 
 # Hyperparameters to be used everywhere
 batch_size: 32
